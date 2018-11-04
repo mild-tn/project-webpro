@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web.int303.project.servlet;
+package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,9 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
-import web.int303.project.model.controllers.ProductJpaController;
-import web.int303.project.models.Product;
-
 /**
  *
  * @author Mild-TN
@@ -41,11 +38,11 @@ public class ShowProductServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        ProductJpaController productJpaController = new ProductJpaController(utx, emf);
-        List<Product> product = productJpaController.findProductEntities();
-        request.setAttribute("products", product);
-        getServletContext().getRequestDispatcher("/ProductList.jsp").forward(request, response);
+//        HttpSession session = request.getSession(false);
+//        ProductJpaController productJpaController = new ProductJpaController(utx, emf);
+//        List<Product> product = productJpaController.findProductEntities();
+//        request.setAttribute("products", product);
+//        getServletContext().getRequestDispatcher("/ProductList.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
