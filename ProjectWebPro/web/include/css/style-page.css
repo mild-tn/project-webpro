@@ -31,3 +31,11 @@ header{
     margin-top: -60px;
     z-index: -100;
 }
+.fa-circle{
+    border: 1px #000;
+}
+
+box{
+    width: 100px;
+    height: 100px;
+}

@@ -10,25 +10,31 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Product</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <table>
-            <tr>
-                <th>#</th>
-                <th>Product Code</th>
-                <th>Product Name</th>
-                <th>Product Description</th>
-            </tr>
-            <c:forEach items="${products}" var="p" varStatus="vc">
-                <tr>
-                    <th>${vc.count}</th>
-                    <th>${p.productcode}</th>
-                    <th>${p.productname}</th>
-                    <th>#</th>
-                </tr>
-            </c:forEach>
-        </table>
+        <jsp:include page="include/NavBar.jsp"/>
+        <h1>Product List</h1>
+        <div class="container">
+            <div class="row">
+                <c:forEach items="${products}" var="p">
+                    <div class="col-6 col-md-4">
+                    <br>
+                        <div class="card-group">
+                            <div class="card">
+                                <img class="card-img-top" src="..." alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">${p.productname}</h5>
+                                    <p>Color : <div style="height: 20px;width: 20px;background-color: ${p.productcolor};border: 1px solid black;border-radius: 10px;"></div></p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
     </body>
 </html>
