@@ -5,8 +5,8 @@
  */
 package servlet;
 
-import Webpro.model.Account;
-import Webpro.model.jpa.AccountJpaController;
+
+import controller.AccountJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.annotation.Resource;
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
+import model.Account;
 
 /**
  *
@@ -44,7 +45,7 @@ EntityManagerFactory emf ;
       String pass = request.getParameter("pass");   
         if (email!=null&&email.length()>0&&pass!=null&&pass.length()>0) {
             AccountJpaController accountJpaCtrl = new AccountJpaController(utx, emf);
-            Account ac = accountJpaCtrl.findAccount(email);
+            Account ac = accountJpaCtrl.findAccount();
             if (ac!=null) {
                 if(ac.getPassword().equals(pass)){
                    request.getSession().setAttribute("account", ac);
