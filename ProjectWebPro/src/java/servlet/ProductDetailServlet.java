@@ -5,7 +5,7 @@
  */
 package servlet;
 
-import controller.AccountJpaController;
+import controller.ProductJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.annotation.Resource;
@@ -15,51 +15,27 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
-import model.Account;
+import model.Product;
 
-/**
- *
- * @author maysmiler
- */
-public class LoginServlet extends HttpServlet {
-
+public class ProductDetailServlet extends HttpServlet {
+    @PersistenceUnit(unitName = "ProjectWebProPU")
+    EntityManagerFactory emf;
+    
     @Resource
     UserTransaction utx;
-    @PersistenceUnit (unitName = "ProjectWebProPU")
-    EntityManagerFactory emf;
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
-        System.out.println("test"+email);
-        if (email != null && email.length() > 0 && pass != null && pass.length() > 0) {
-            AccountJpaController accountJpaCtrl = new AccountJpaController(utx, emf);
-            Account ac = accountJpaCtrl.findByEmail(email);
-            System.out.println("email" + ac);
-            if (ac != null) {
-                if (ac.getPassword().equals(pass)) {
-                    session.setAttribute("account", ac);
-                    getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
-                    request.setAttribute("massage", "Login");
-                    return;
-                }
-            }
-
-        }
-        getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+         String productCode = request.getParameter("productCode");
+         System.out.println("productCode" + productCode);
+         if(productCode == null){
+             response.sendError(HttpServletResponse.SC_EXPECTATION_FAILED);
+         }else{
+             ProductJpaController productJpaCtrl = new ProductJpaController(utx, emf);
+             Product product = productJpaCtrl.findProduct(productCode);
+             request.setAttribute("productDetail",product);
+             getServletContext().getRequestDispatcher("/ProductDetail.jsp").forward(request, response);
+         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

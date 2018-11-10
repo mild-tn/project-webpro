@@ -8,12 +8,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Product</title>
+     <head>
+        <title>TODO supply a title </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="include/css/style-page.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"/>
     </head>
     <body>
-        <jsp:include page="include/NavBar.jsp"/>
+        <jsp:include page="include/NavBarBackColor.jsp"/>
         <h1>Product List</h1>
         <div class="container">
             <div class="row">
@@ -22,13 +26,10 @@
                     <br>
                         <div class="card-group">
                             <div class="card">
-                                <img class="card-img-top" src="..." alt="Card image cap">
+                                <img class="card-img-top" src="include/img/product/${p.productcode}.jpg" width="100px" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title">${p.productname}</h5>
-                                    <p>Color : <div style="height: 20px;width: 20px;background-color: ${p.productcolor};border: 1px solid black;border-radius: 10px;"></div></p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                    <h5 class="card-title"><a href="ProductDetail?productCode=${p.productcode}">${p.productname}</a></h5>
+                                    <p> Color : <input style="height: 20px;width: 20px;background-color: ${p.productcolor};border: 1px solid black;border-radius: 10px;" disabled/></p>
                                 </div>
                             </div>
                         </div>
