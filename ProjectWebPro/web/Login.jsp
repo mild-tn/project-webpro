@@ -1,6 +1,6 @@
 <%-- 
     Document   : Login
-    Created on : Nov 2, 2018, 11:15:29 AM
+    Created on : Nov 10, 2018, 1:59:20 PM
     Author     : maysmiler
 --%>
 
@@ -9,21 +9,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login</title>
+        <title>Login Page</title>
+         <link rel="stylesheet" href="include/css/Login.style.css"/>
     </head>
     <body>
-        <h1>Login</h1>
-        <form action="/Login" method="post">
-            Email  <br>
-            <input type="text" name="user" placeholder="Please enter your Email" size="32" required />
-            <br><br>
-            Password   <br>
-            <input type="password" name="pass" placeholder="Password" size="32" required/>
-            <br><br>
-            <input type="submit" value="Login"/>
-            <a href="ResetPass.jsp">Forgot Password?</a>
-                
+        <form action="Login" method="post">
+     <div id="overlay"></div>
+    <div class="loginbox">
+        <h1>Sign in</h1><br>
+        
+            <input type="text" name="email" placeholder="Username"><br>
+            <input type="password" name="pass" placeholder="Password">
+            <input type="submit" value="LOGIN">
         </form>
-
+      
+        <a href="#">Forgot Password?</a><br>
+        <span id="text-account">Don't have an account?</span><a id="create-account" href="#"> Create here.</a>
+        
+    </div>
     </body>
 </html>
