@@ -12,36 +12,27 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="include/css/style-page.css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"/>
     </head>
-    <style>
-        nav{
-            background-color: #333;
-            color: #fff;
-        }
-        nav a{
-            background-color: #333;
-            color: #fff;
-        }
-        nav a:hover{
-            color: #6c757d;
-        }
-    </style>
-    <script>
-        var prevScrollpos = window.pageYOffset;
-        window.onscroll = function () {
-            var currentScrollPos = window.pageYOffset;
-            if (prevScrollpos < currentScrollPos) {
-                document.getElementById("navbar").style.top = "0";
-                document.getElementById("navbar").style.backgroundColor = "#333";
-                document.getElementById("navbar").style.color = "#000";
-            } else {
-                document.getElementById("navbar").style.top = "-30px";
-                document.getElementById("navbar").style.backgroundColor = "#333";
+    <body>
+        <script>
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function () {
+                var currentScrollPos = window.pageYOffset;
+                if (prevScrollpos < currentScrollPos) {
+                    document.getElementById("navbar").style.top = "0";
+                    document.getElementById("navbar").style.backgroundColor = "#333";
+                    document.getElementById("navbar").style.color = "#000";
+                } else {
+                    document.getElementById("navbar").style.top = "-30px";
+                    document.getElementById("navbar").style.backgroundColor = "transparent";
+                }
+                prevScrollpos = currentScrollPos;
             }
-            prevScrollpos = currentScrollPos;
-        }
-    </script>
+
+
+        </script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -69,7 +60,7 @@
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="Login">Login</a>
+                        <a class="nav-link" href="LogoutServlet">Logout</a>
                     </li>     
                 </ul>
             </div>
