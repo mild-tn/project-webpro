@@ -7,6 +7,7 @@ package servlet;
 
 import controller.AccountJpaController;
 import controller.RegisterJpaController;
+import controller.exceptions.NonexistentEntityException;
 import controller.exceptions.RollbackFailureException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,25 +58,27 @@ public class ActivateKeyServlet extends HttpServlet {
             System.out.println("regisssssss : "+register.getEmail());
             if (activateKey.equals(register.getActivatekey())) {
                 register.setActivatedate(new Date());
-                Account account = new Account(register.getRegisterId(),register.getEmail(),register.getPassword());
-                System.out.println("Accounttttttttttttttttttttt : "+account);
+                Account account = new Account(register.getEmail(),register.getPassword());
+                System.out.println("Accounttttttttttttttttttttt : "+register.getRegisterId());
                 try {
                     regJpaCtrl.edit(register);
                     accountJpaCtrl.create(account);
                     isActivated = true;
                     request.setAttribute("isActivated", isActivated);
                     getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ActivateKeyServlet.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (RollbackFailureException ex) {
-                    Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, "jpa", ex);
+                    Logger.getLogger(ActivateKeyServlet.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
-                    Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, "jpa", ex);
+                    Logger.getLogger(ActivateKeyServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }else{
                 //Alert BY JS
                 request.setAttribute("messageActivate", "Wrong!!!!! Try Again");
             }
         }
-                getServletContext().getRequestDispatcher("/ActivateAccount.jsp").forward(request, response);
+//                getServletContext().getRequestDispatcher("/ActivateAccount.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
