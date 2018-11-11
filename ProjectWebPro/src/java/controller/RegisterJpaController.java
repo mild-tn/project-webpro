@@ -5,22 +5,25 @@
  */
 package controller;
 
+import controller.exceptions.IllegalOrphanException;
 import controller.exceptions.NonexistentEntityException;
 import controller.exceptions.RollbackFailureException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import model.Account;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
 import model.Register;
 
 /**
  *
- * @author Mild-TN
+ * @author kao-tu
  */
 public class RegisterJpaController implements Serializable {
 
@@ -36,11 +39,29 @@ public class RegisterJpaController implements Serializable {
     }
 
     public void create(Register register) throws RollbackFailureException, Exception {
+        if (register.getAccountList() == null) {
+            register.setAccountList(new ArrayList<Account>());
+        }
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
+            List<Account> attachedAccountList = new ArrayList<Account>();
+            for (Account accountListAccountToAttach : register.getAccountList()) {
+                accountListAccountToAttach = em.getReference(accountListAccountToAttach.getClass(), accountListAccountToAttach.getAccountId());
+                attachedAccountList.add(accountListAccountToAttach);
+            }
+            register.setAccountList(attachedAccountList);
             em.persist(register);
+            for (Account accountListAccount : register.getAccountList()) {
+                Register oldRegisterIdOfAccountListAccount = accountListAccount.getRegisterId();
+                accountListAccount.setRegisterId(register);
+                accountListAccount = em.merge(accountListAccount);
+                if (oldRegisterIdOfAccountListAccount != null) {
+                    oldRegisterIdOfAccountListAccount.getAccountList().remove(accountListAccount);
+                    oldRegisterIdOfAccountListAccount = em.merge(oldRegisterIdOfAccountListAccount);
+                }
+            }
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -56,12 +77,45 @@ public class RegisterJpaController implements Serializable {
         }
     }
 
-    public void edit(Register register) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Register register) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
+            Register persistentRegister = em.find(Register.class, register.getRegisterId());
+            List<Account> accountListOld = persistentRegister.getAccountList();
+            List<Account> accountListNew = register.getAccountList();
+            List<String> illegalOrphanMessages = null;
+            for (Account accountListOldAccount : accountListOld) {
+                if (!accountListNew.contains(accountListOldAccount)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Account " + accountListOldAccount + " since its registerId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Account> attachedAccountListNew = new ArrayList<Account>();
+            for (Account accountListNewAccountToAttach : accountListNew) {
+                accountListNewAccountToAttach = em.getReference(accountListNewAccountToAttach.getClass(), accountListNewAccountToAttach.getAccountId());
+                attachedAccountListNew.add(accountListNewAccountToAttach);
+            }
+            accountListNew = attachedAccountListNew;
+            register.setAccountList(accountListNew);
             register = em.merge(register);
+            for (Account accountListNewAccount : accountListNew) {
+                if (!accountListOld.contains(accountListNewAccount)) {
+                    Register oldRegisterIdOfAccountListNewAccount = accountListNewAccount.getRegisterId();
+                    accountListNewAccount.setRegisterId(register);
+                    accountListNewAccount = em.merge(accountListNewAccount);
+                    if (oldRegisterIdOfAccountListNewAccount != null && !oldRegisterIdOfAccountListNewAccount.equals(register)) {
+                        oldRegisterIdOfAccountListNewAccount.getAccountList().remove(accountListNewAccount);
+                        oldRegisterIdOfAccountListNewAccount = em.merge(oldRegisterIdOfAccountListNewAccount);
+                    }
+                }
+            }
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -84,7 +138,7 @@ public class RegisterJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
@@ -95,6 +149,17 @@ public class RegisterJpaController implements Serializable {
                 register.getRegisterId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The register with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Account> accountListOrphanCheck = register.getAccountList();
+            for (Account accountListOrphanCheckAccount : accountListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Register (" + register + ") cannot be destroyed since the Account " + accountListOrphanCheckAccount + " in its accountList field has a non-nullable registerId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(register);
             utx.commit();

@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -58,6 +60,9 @@ public class Account implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "PASSWORD")
     private String password;
+    @JoinColumn(name = "REGISTER_ID", referencedColumnName = "REGISTER_ID")
+    @ManyToOne(optional = false)
+    private Register registerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
     private List<Customer> customerList;
 
@@ -104,6 +109,14 @@ public class Account implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Register getRegisterId() {
+        return registerId;
+    }
+
+    public void setRegisterId(Register registerId) {
+        this.registerId = registerId;
     }
 
     @XmlTransient

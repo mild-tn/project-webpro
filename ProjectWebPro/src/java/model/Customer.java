@@ -6,7 +6,9 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,10 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -85,6 +89,10 @@ public class Customer implements Serializable {
     @Size(max = 6)
     @Column(name = "SEX")
     private String sex;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private List<Payment> paymentList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customernumber")
+    private List<Orderscustomer> orderscustomerList;
     @JoinColumn(name = "ACCOUNT_ID", referencedColumnName = "ACCOUNT_ID")
     @ManyToOne(optional = false)
     private Account accountId;
@@ -184,6 +192,24 @@ public class Customer implements Serializable {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    @XmlTransient
+    public List<Payment> getPaymentList() {
+        return paymentList;
+    }
+
+    public void setPaymentList(List<Payment> paymentList) {
+        this.paymentList = paymentList;
+    }
+
+    @XmlTransient
+    public List<Orderscustomer> getOrderscustomerList() {
+        return orderscustomerList;
+    }
+
+    public void setOrderscustomerList(List<Orderscustomer> orderscustomerList) {
+        this.orderscustomerList = orderscustomerList;
     }
 
     public Account getAccountId() {

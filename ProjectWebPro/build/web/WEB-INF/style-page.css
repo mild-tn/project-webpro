@@ -1,0 +1,41 @@
+body{
+
+}
+p.p1{
+    color: aliceblue;
+    z-index: 10;
+    top: 58vh;
+    margin-left: 15em;
+    position: absolute;
+
+}
+button.btn1{
+    z-index: 10;
+    top: 50vh;
+    width: 10vw;
+    margin-left: 15em;
+    position: absolute;
+}
+nav{
+    background-color: transparent;
+    z-index: 100;
+    color: white;
+}
+a{
+    color: white;
+}
+a:hover{
+    color: #5a6268;
+}
+header{
+    margin-top: -60px;
+    z-index: -100;
+}
+.fa-circle{
+    border: 1px #000;
+}
+
+box{
+    width: 100px;
+    height: 100px;
+}

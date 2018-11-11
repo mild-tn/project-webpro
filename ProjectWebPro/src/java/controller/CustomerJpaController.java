@@ -22,7 +22,7 @@ import model.Customer;
 
 /**
  *
- * @author Mild-TN
+ * @author kao-tu
  */
 public class CustomerJpaController implements Serializable {
 

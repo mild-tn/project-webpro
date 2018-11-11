@@ -7,17 +7,21 @@ package model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -86,6 +90,8 @@ public class Product implements Serializable {
     @NotNull
     @Column(name = "BUYPRICE")
     private BigDecimal buyprice;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Orderdetail> orderdetailList;
 
     public Product() {
     }
@@ -191,6 +197,15 @@ public class Product implements Serializable {
         this.buyprice = buyprice;
     }
 
+    @XmlTransient
+    public List<Orderdetail> getOrderdetailList() {
+        return orderdetailList;
+    }
+
+    public void setOrderdetailList(List<Orderdetail> orderdetailList) {
+        this.orderdetailList = orderdetailList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -213,7 +228,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "controller.Product[ productcode=" + productcode + " ]";
+        return "model.Product[ productcode=" + productcode + " ]";
     }
     
 }

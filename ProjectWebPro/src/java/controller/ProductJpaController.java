@@ -21,7 +21,7 @@ import model.Product;
 
 /**
  *
- * @author Mild-TN
+ * @author kao-tu
  */
 public class ProductJpaController implements Serializable {
 
