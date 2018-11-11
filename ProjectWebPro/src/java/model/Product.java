@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Mild-TN
+ * @author kao-tu
  */
 @Entity
 @Table(name = "PRODUCT")
@@ -213,7 +213,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "controller.Product[ productcode=" + productcode + " ]";
+        return "model.Product[ productcode=" + productcode + " ]";
     }
     
 }

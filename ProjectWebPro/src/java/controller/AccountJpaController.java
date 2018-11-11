@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import model.Register;
 import model.Customer;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import model.Account;
 
 /**
  *
- * @author Mild-TN
+ * @author kao-tu
  */
 public class AccountJpaController implements Serializable {
 
@@ -46,6 +47,11 @@ public class AccountJpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
+            Register registerId = account.getRegisterId();
+            if (registerId != null) {
+                registerId = em.getReference(registerId.getClass(), registerId.getRegisterId());
+                account.setRegisterId(registerId);
+            }
             List<Customer> attachedCustomerList = new ArrayList<Customer>();
             for (Customer customerListCustomerToAttach : account.getCustomerList()) {
                 customerListCustomerToAttach = em.getReference(customerListCustomerToAttach.getClass(), customerListCustomerToAttach.getCustomernumber());
@@ -53,6 +59,10 @@ public class AccountJpaController implements Serializable {
             }
             account.setCustomerList(attachedCustomerList);
             em.persist(account);
+            if (registerId != null) {
+                registerId.getAccountList().add(account);
+                registerId = em.merge(registerId);
+            }
             for (Customer customerListCustomer : account.getCustomerList()) {
                 Account oldAccountIdOfCustomerListCustomer = customerListCustomer.getAccountId();
                 customerListCustomer.setAccountId(account);
@@ -83,6 +93,8 @@ public class AccountJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Account persistentAccount = em.find(Account.class, account.getAccountId());
+            Register registerIdOld = persistentAccount.getRegisterId();
+            Register registerIdNew = account.getRegisterId();
             List<Customer> customerListOld = persistentAccount.getCustomerList();
             List<Customer> customerListNew = account.getCustomerList();
             List<String> illegalOrphanMessages = null;
@@ -97,6 +109,10 @@ public class AccountJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (registerIdNew != null) {
+                registerIdNew = em.getReference(registerIdNew.getClass(), registerIdNew.getRegisterId());
+                account.setRegisterId(registerIdNew);
+            }
             List<Customer> attachedCustomerListNew = new ArrayList<Customer>();
             for (Customer customerListNewCustomerToAttach : customerListNew) {
                 customerListNewCustomerToAttach = em.getReference(customerListNewCustomerToAttach.getClass(), customerListNewCustomerToAttach.getCustomernumber());
@@ -105,6 +121,14 @@ public class AccountJpaController implements Serializable {
             customerListNew = attachedCustomerListNew;
             account.setCustomerList(customerListNew);
             account = em.merge(account);
+            if (registerIdOld != null && !registerIdOld.equals(registerIdNew)) {
+                registerIdOld.getAccountList().remove(account);
+                registerIdOld = em.merge(registerIdOld);
+            }
+            if (registerIdNew != null && !registerIdNew.equals(registerIdOld)) {
+                registerIdNew.getAccountList().add(account);
+                registerIdNew = em.merge(registerIdNew);
+            }
             for (Customer customerListNewCustomer : customerListNew) {
                 if (!customerListOld.contains(customerListNewCustomer)) {
                     Account oldAccountIdOfCustomerListNewCustomer = customerListNewCustomer.getAccountId();
@@ -161,6 +185,11 @@ public class AccountJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            Register registerId = account.getRegisterId();
+            if (registerId != null) {
+                registerId.getAccountList().remove(account);
+                registerId = em.merge(registerId);
+            }
             em.remove(account);
             utx.commit();
         } catch (Exception ex) {
@@ -210,16 +239,6 @@ public class AccountJpaController implements Serializable {
         }
     }
 
-    public Account findByEmail(String email) {
-        EntityManager em = getEntityManager();
-        Query query = em.createNamedQuery("Account.findByEmail");
-        query.setParameter("email", email);
-        try {
-            return (Account)query.getSingleResult();
-        } finally {
-            em.close();
-        }
-    }
     public int getAccountCount() {
         EntityManager em = getEntityManager();
         try {
@@ -233,4 +252,14 @@ public class AccountJpaController implements Serializable {
         }
     }
     
+     public Account findByEmail(String email) {
+         EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Account.findByEmail");
+        query.setParameter("email", email);
+        try {
+            return (Account)query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
 }

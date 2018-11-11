@@ -24,7 +24,7 @@
         </form>
       
         <a href="#">Forgot Password?</a><br>
-        <span id="text-account">Don't have an account?</span><a id="create-account" href="#"> Create here.</a>
+        <span id="text-account">Don't have an account?</span><a id="create-account" href="Register.jsp"> Create here.</a>
         
     </div>
     </body>

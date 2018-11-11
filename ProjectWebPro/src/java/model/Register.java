@@ -7,22 +7,25 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Register.findAll", query = "SELECT r FROM Register r")
     , @NamedQuery(name = "Register.findByRegisterId", query = "SELECT r FROM Register r WHERE r.registerId = :registerId")
     , @NamedQuery(name = "Register.findByEmail", query = "SELECT r FROM Register r WHERE r.email = :email")
-    , @NamedQuery(name = "Register.findByActivedate", query = "SELECT r FROM Register r WHERE r.activedate = :activedate")
+    , @NamedQuery(name = "Register.findByActivatedate", query = "SELECT r FROM Register r WHERE r.activatedate = :activatedate")
     , @NamedQuery(name = "Register.findByActivatekey", query = "SELECT r FROM Register r WHERE r.activatekey = :activatekey")
     , @NamedQuery(name = "Register.findByPassword", query = "SELECT r FROM Register r WHERE r.password = :password")
     , @NamedQuery(name = "Register.findByRegdate", query = "SELECT r FROM Register r WHERE r.regdate = :regdate")})
@@ -50,29 +53,23 @@ public class Register implements Serializable {
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 255)
     @Column(name = "EMAIL")
     private String email;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "ACTIVEDATE")
-    private String activedate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Column(name = "ACTIVATEDATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date activatedate;
+    @Size(max = 255)
     @Column(name = "ACTIVATEKEY")
     private String activatekey;
-    @Basic(optional = false)
-    @NotNull
+    @Size(max = 255)
     @Column(name = "PASSWORD")
-    private int password;
+    private String password;
     @Column(name = "REGDATE")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date regdate;
-    @JoinColumn(name = "ACCOUNT_ID", referencedColumnName = "ACCOUNT_ID")
-    @ManyToOne(optional = false)
-    private Account accountId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "registerId")
+    private List<Account> accountList;
 
     public Register() {
     }
@@ -81,17 +78,19 @@ public class Register implements Serializable {
         this.registerId = registerId;
     }
 
-    public Register(Integer registerId, String email, String activedate, String activatekey, int password) {
+    public Register(Integer registerId, String email) {
         this.registerId = registerId;
         this.email = email;
-        this.activedate = activedate;
-        this.activatekey = activatekey;
+    }
+    
+    public Register(String email, String password) {
+        this.registerId = registerId;
+        this.email = email;
         this.password = password;
+        this.regdate = new Date();
+        this.activatekey = UUID.randomUUID().toString().replace("-","").substring(0,15);
     }
 
-    public Register(String email, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public Integer getRegisterId() {
         return registerId;
@@ -109,12 +108,12 @@ public class Register implements Serializable {
         this.email = email;
     }
 
-    public String getActivedate() {
-        return activedate;
+    public Date getActivatedate() {
+        return activatedate;
     }
 
-    public void setActivedate(String activedate) {
-        this.activedate = activedate;
+    public void setActivatedate(Date activatedate) {
+        this.activatedate = activatedate;
     }
 
     public String getActivatekey() {
@@ -125,11 +124,11 @@ public class Register implements Serializable {
         this.activatekey = activatekey;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -141,12 +140,13 @@ public class Register implements Serializable {
         this.regdate = regdate;
     }
 
-    public Account getAccountId() {
-        return accountId;
+    @XmlTransient
+    public List<Account> getAccountList() {
+        return accountList;
     }
 
-    public void setAccountId(Account accountId) {
-        this.accountId = accountId;
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
     }
 
     @Override

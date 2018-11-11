@@ -17,15 +17,16 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
-import model.Product;
+import model.Payment;
+import model.PaymentPK;
 
 /**
  *
  * @author kao-tu
  */
-public class ProductJpaController implements Serializable {
+public class PaymentJpaController implements Serializable {
 
-    public ProductJpaController(UserTransaction utx, EntityManagerFactory emf) {
+    public PaymentJpaController(UserTransaction utx, EntityManagerFactory emf) {
         this.utx = utx;
         this.emf = emf;
     }
@@ -36,12 +37,16 @@ public class ProductJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Product product) throws PreexistingEntityException, RollbackFailureException, Exception {
+    public void create(Payment payment) throws PreexistingEntityException, RollbackFailureException, Exception {
+        if (payment.getPaymentPK() == null) {
+            payment.setPaymentPK(new PaymentPK());
+        }
+        payment.getPaymentPK().setCustomernumber(payment.getCustomer().getCustomernumber());
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            em.persist(product);
+            em.persist(payment);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -49,8 +54,8 @@ public class ProductJpaController implements Serializable {
             } catch (Exception re) {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
-            if (findProduct(product.getProductcode()) != null) {
-                throw new PreexistingEntityException("Product " + product + " already exists.", ex);
+            if (findPayment(payment.getPaymentPK()) != null) {
+                throw new PreexistingEntityException("Payment " + payment + " already exists.", ex);
             }
             throw ex;
         } finally {
@@ -60,12 +65,13 @@ public class ProductJpaController implements Serializable {
         }
     }
 
-    public void edit(Product product) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Payment payment) throws NonexistentEntityException, RollbackFailureException, Exception {
+        payment.getPaymentPK().setCustomernumber(payment.getCustomer().getCustomernumber());
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            product = em.merge(product);
+            payment = em.merge(payment);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -75,9 +81,9 @@ public class ProductJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = product.getProductcode();
-                if (findProduct(id) == null) {
-                    throw new NonexistentEntityException("The product with id " + id + " no longer exists.");
+                PaymentPK id = payment.getPaymentPK();
+                if (findPayment(id) == null) {
+                    throw new NonexistentEntityException("The payment with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -88,19 +94,19 @@ public class ProductJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(PaymentPK id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            Product product;
+            Payment payment;
             try {
-                product = em.getReference(Product.class, id);
-                product.getProductcode();
+                payment = em.getReference(Payment.class, id);
+                payment.getPaymentPK();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The product with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The payment with id " + id + " no longer exists.", enfe);
             }
-            em.remove(product);
+            em.remove(payment);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -116,19 +122,19 @@ public class ProductJpaController implements Serializable {
         }
     }
 
-    public List<Product> findProductEntities() {
-        return findProductEntities(true, -1, -1);
+    public List<Payment> findPaymentEntities() {
+        return findPaymentEntities(true, -1, -1);
     }
 
-    public List<Product> findProductEntities(int maxResults, int firstResult) {
-        return findProductEntities(false, maxResults, firstResult);
+    public List<Payment> findPaymentEntities(int maxResults, int firstResult) {
+        return findPaymentEntities(false, maxResults, firstResult);
     }
 
-    private List<Product> findProductEntities(boolean all, int maxResults, int firstResult) {
+    private List<Payment> findPaymentEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Product.class));
+            cq.select(cq.from(Payment.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -140,20 +146,20 @@ public class ProductJpaController implements Serializable {
         }
     }
 
-    public Product findProduct(String id) {
+    public Payment findPayment(PaymentPK id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Product.class, id);
+            return em.find(Payment.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getProductCount() {
+    public int getPaymentCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Product> rt = cq.from(Product.class);
+            Root<Payment> rt = cq.from(Payment.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

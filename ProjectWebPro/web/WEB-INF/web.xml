@@ -12,6 +12,14 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>servlet.LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>servlet.RegisterServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActivateKeyServlet</servlet-name>
+        <servlet-class>servlet.ActivateKeyServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShowProductServlet</servlet-name>
         <url-pattern>/ShowProductServlet</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/Register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActivateKeyServlet</servlet-name>
+        <url-pattern>/ActivateKey</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

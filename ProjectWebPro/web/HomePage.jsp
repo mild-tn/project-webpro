@@ -50,6 +50,7 @@
         </header>
         <section style="height: 1000px;">
             <p>Test  test</p>
+             <p>${isActivated}</p>
         </section>
     </body>
 </html>
