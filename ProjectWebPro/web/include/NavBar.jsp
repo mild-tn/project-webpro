@@ -15,6 +15,19 @@
         <link rel="stylesheet" href="include/css/style-page.css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"/>
     </head>
+    <style>
+        #navbar-ProductList{
+            background-color: #333;
+        }
+        i{
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        .fa-cart-plus{
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    </style>
     <body>
         <script>
             var prevScrollpos = window.pageYOffset;
@@ -30,8 +43,6 @@
                 }
                 prevScrollpos = currentScrollPos;
             }
-
-
         </script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -45,7 +56,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home<span class="sr-only"></span></a>
+                        <a class="nav-link" href="HomePage.jsp">Home<span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="ShowProductServlet">Product</a>
@@ -60,7 +71,14 @@
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="LogoutServlet">Logout</a>
+                        <c:choose>
+                            <c:when test="${message == 'Login'}">
+                                <a class="nav-link" href="LogoutServlet">Logout</a>
+                            </c:when>
+                            <c:when test="${message == null}">
+                                <a class="nav-link" href="Login.jsp">Login</a>
+                            </c:when>
+                        </c:choose>
                     </li>     
                 </ul>
             </div>

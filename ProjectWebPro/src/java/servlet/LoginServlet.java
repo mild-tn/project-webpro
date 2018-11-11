@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 
     @Resource
     UserTransaction utx;
-    @PersistenceUnit (unitName = "ProjectWebProPU")
+    @PersistenceUnit(unitName = "ProjectWebProPU")
     EntityManagerFactory emf;
 
     /**
@@ -44,22 +44,25 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
-        System.out.println("test"+email);
-        if (email != null && email.length() > 0 && pass != null && pass.length() > 0) {
-            AccountJpaController accountJpaCtrl = new AccountJpaController(utx, emf);
-            Account ac = accountJpaCtrl.findByEmail(email);
-            System.out.println("email" + ac);
-            if (ac != null) {
-                if (ac.getPassword().equals(pass)) {
-                    session.setAttribute("account", ac);
-                    getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
-                    request.setAttribute("massage", "Login");
-                    return;
+        System.out.println("test" + email);
+        if (session != null) {
+            if (email != null && email.length() > 0 && pass != null && pass.length() > 0) {
+                AccountJpaController accountJpaCtrl = new AccountJpaController(utx, emf);
+                Account ac = accountJpaCtrl.findByEmail(email);
+                System.out.println("email" + ac);
+                if (ac != null) {
+                    if (ac.getPassword().equals(pass)) {
+                        session.setAttribute("account", ac);
+                        getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
+                        session.setAttribute("message", "Login");
+                        return;
+                    }
                 }
-            }
 
+            }
+        } else {
+            getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
         }
-        getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

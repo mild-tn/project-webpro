@@ -5,6 +5,7 @@ body{
     background-size: cover;
     font-family: 'Open Sans', sans-serif;
     z-index: -10;
+    color: #fff;
 }
 
 #overlay{
@@ -21,7 +22,7 @@ body{
 .loginbox{
     width: 320px;
     height: 360px;
-    color: #000;
+    color: #fff;
     top: 50%;
     left: 50%;
     padding: 60px 30px;

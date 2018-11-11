@@ -19,7 +19,7 @@
     <body>
         <jsp:include page="include/NavBar.jsp" />
         <header>
-            <a href="custom.html"><button type="button" class="btn btn-outline-light btn1">เลือกซื้อเลย >></button></a>
+            <a href="ShowProductServlet"><button type="button" class="btn btn-outline-light btn1">เลือกซื้อเลย >></button></a>
             <p class="p1">เท่แบบมีสไตล์ ไม่เหมือนใคร</p>
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">

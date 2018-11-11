@@ -16,6 +16,12 @@
         <link rel="stylesheet" href="include/css/style-page.css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"/>
     </head>
+    <style>
+        #h5 a{
+            color: #333;
+            text-decoration: initial;
+        }
+    </style>
     <body>
         <jsp:include page="include/NavBarBackColor.jsp"/>
         <h1>Product List</h1>
@@ -28,7 +34,7 @@
                             <div class="card">
                                 <img class="card-img-top" src="include/img/product/${p.productcode}.jpg" width="100px" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title"><a href="ProductDetail?productCode=${p.productcode}">${p.productname}</a></h5>
+                                    <h5 class="card-title" id="h5"><a href="ProductDetail?productCode=${p.productcode}">${p.productname}</a></h5>
                                     <p> Color : <input style="height: 20px;width: 20px;background-color: ${p.productcolor};border: 1px solid black;border-radius: 10px;" disabled/></p>
                                 </div>
                             </div>
