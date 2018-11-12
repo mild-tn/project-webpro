@@ -18,9 +18,9 @@ body{
     
 }
 
-.loginbox{
+.resetbox{
     width: 320px;
-    height: 360px;
+    height: 270px;
     color: #fff;
     top: 50%;
     left: 50%;
@@ -32,7 +32,7 @@ body{
     box-shadow: 8px 8px 50px #000;
 }
 h1{
-    color: #000;
+    color: #fff;
     margin: 0;
     padding: 0 0 0px;
     text-align: center;
@@ -40,57 +40,57 @@ h1{
     font-weight: bold;
 }
 
-.loginbox p {
+.resetbox p {
     margin: 0;
     padding: 0;
     font-weight: bold;
     font-size: 13px;
 }
  
-.loginbox input{
+.resetbox input{
     width: 100%;
     margin-bottom: 20px;
 }
 
-.loginbox input[type="text"], input[type="password"]{
+.resetbox input[type="text"], input[type="password"]{
     border: none;
     border-bottom: 1px solid #957C55;
     background: transparent;
     outline: none;
-    height: 30px;
+    height: 25px;
     font-size: 16px;
     opacity: 1;
     color: #ccc;
 }
 
 
-.loginbox input[type="submit"]{
+.resetbox input[type="submit"]{
     border: none;
     outline: none;
     height: 40px;
     background: #AB893E;
     color: #fff;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     border-radius: 20px;
     font-family: 'Open Sans', sans-serif;
 }
 
-.loginbox input[type="submit"]:hover {
+.resetbox input[type="submit"]:hover {
     cursor: pointer;
     background: #B69857;
     color: #fff;
     
 }
 
-.loginbox a {
+.resetbox a {
     font-size: 15px;
     text-decoration: none;
     color: #fff;
     opacity: 0.8;
 }
 
-.loginbox a:hover {
+.resetbox a:hover {
     color: #fff;
     opacity: 1;
 }
