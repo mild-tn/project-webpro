@@ -10,32 +10,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Page</title>
-        <link rel="stylesheet" href="include/css/Login.style.css"/>
+         <link rel="stylesheet" href="include/css/Login.style.css"/>
     </head>
-    <style>
-        body{
-            color: #fff;
-        }
-        h1{
-            color: #fff;
-            
-        }
-    </style>
     <body>
-        <jsp:include page="include/NavBar.jsp"/>
         <form action="Login" method="post">
-            <div id="overlay"></div>
-            <div class="loginbox">
-                <h1>Sign in</h1>
-
-                <input type="text" name="email" placeholder="Username"><br>
-                <input type="password" name="pass" placeholder="Password">
-                <input type="submit" value="LOGIN">
-                </form>
-
-                <a href="ResetPassword.jsp">Forgot Password?</a><br>
-                <span id="text-account">Don't have an account?</span><a id="create-account" href="Register.jsp"> Create here.</a>
-
-            </div>
+     <div id="overlay"></div>
+    <div class="loginbox">
+        <h1>Sign in</h1><br>
+        
+            <input type="text" name="email" placeholder="Username"><br>
+            <input type="password" name="pass" placeholder="Password">
+            <input type="submit" value="LOGIN">
+        </form>
+      
+        <a href="#">Forgot Password?</a><br>
+        <span id="text-account">Don't have an account?</span><a id="create-account" href="Register.jsp"> Create here.</a>
+        
+    </div>
     </body>
 </html>

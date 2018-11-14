@@ -12,29 +12,22 @@
         <title>Reset Password Page</title>
     </head>
     <body>
-           <link rel="stylesheet" href="include/css/resetpass.style.css"/>
+           <link rel="stylesheet" href="include/css/ResetPass.style.css"/>
     </head>
     <body>
-         <style>
-        body{
-            color: #fff;
-        }
-        h2{
-            text-align: center;
-        }
-    </style>
-          <jsp:include page="include/NavBar.jsp"/>
-        <form action="ResetPass" method="post">
+        <form action="ResetPassword" method="post">
      <div id="overlay"></div>
     <div class="resetbox">
-        <h2>Forgot Password?</h2><br>
+        <h1>Forgot Password?</h1><br>
         
             <input type="text" name="emailre" placeholder="Email"><br>
-            <br>
-            
+            <input type="password" name="passre" placeholder="Current Password"><br>
+            <input type="password" name="newpass" placeholder="New Password"><br>
+            <input type="password" name="newpasscf" placeholder="Confirm New Password"><br>
+        <!--<a href="Login">Back?</a><br>-->
             <input type="submit">
         </form>
-        <!--<a href="Login">Back</a><br>-->
+      
         <!--<span id="text-account">Don't have an account?</span><a id="create-account" href="#"> Create here.</a>-->
         
     </div>

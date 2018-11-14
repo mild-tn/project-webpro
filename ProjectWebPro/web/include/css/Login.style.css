@@ -21,7 +21,7 @@ body{
 .loginbox{
     width: 320px;
     height: 360px;
-    color: #fff;
+    color: #000;
     top: 50%;
     left: 50%;
     padding: 60px 30px;
@@ -32,7 +32,7 @@ body{
     box-shadow: 8px 8px 50px #000;
 }
 h1{
-    color: #000;
+    color: #fff;
     margin: 0;
     padding: 0 0 0px;
     text-align: center;
