@@ -17,6 +17,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
+import model.Account;
 import model.Product;
 
 /**
@@ -142,8 +143,10 @@ public class ProductJpaController implements Serializable {
 
     public Product findProduct(String id) {
         EntityManager em = getEntityManager();
+      
         try {
-            return em.find(Product.class, id);
+       return em.find(Product.class, id);
+         
         } finally {
             em.close();
         }
@@ -161,5 +164,15 @@ public class ProductJpaController implements Serializable {
             em.close();
         }
     }
-    
+     public List<Product> findByProductName(String productName) {
+       EntityManager em = getEntityManager();
+        Query query = em.createNamedQuery("Product.findByProductname");
+        query.setParameter("productname",productName);
+        try {
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+     
 }
