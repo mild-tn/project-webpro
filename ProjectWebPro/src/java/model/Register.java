@@ -8,6 +8,7 @@ package model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -120,6 +121,14 @@ public class Register implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Register(String email, String password) {
+        this.registerId = registerId;
+        this.email = email;
+        this.password = password;
+        this.regdate = new Date();
+        this.activatekey = UUID.randomUUID().toString().replace("-","").substring(0,15);
     }
 
     public Date getRegdate() {

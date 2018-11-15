@@ -10,19 +10,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Register Page</title>
-         <link rel="stylesheet" href="include/css/Register.style.css"/>
+        <link rel="stylesheet" href="include/css/Register.style.css"/>
     </head>
     <body>
+        <jsp:include page="include/NavBar.jsp"/>
         <form action="ActivateKey" method="get">
-     <div id="overlay"></div>
-    <div class="registerbox">
-        <h1>Activate</h1><br>
-        <h3 style="color: whitesmoke">Email : ${email}</h3>
-            <input type="text" name="activatekey" placeholder="Activate Key">
-            <input type="submit" value="SUBMIT">
-        </form>
-      
-        
-    </div>
+            <div id="overlay"></div>
+            <div class="registerbox" style="text-align: center;color: whitesmoke">
+                <h1>Activate</h1>
+                <h4 style="color: whitesmoke">Your Email </h4> 
+                <h6 style="color: whitesmoke">${emailRe}</h6>
+                <input type="text" name="email" placeholder="Email">
+                <input type="text" name="activatekey" placeholder="Activate Key">
+                <input type="submit" value="SUBMIT">
+                </form>
+                <p style="color: red;text-align: center">${messageActivate}</p>
+            </div>
     </body>
 </html>

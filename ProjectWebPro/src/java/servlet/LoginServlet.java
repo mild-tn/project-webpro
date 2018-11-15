@@ -53,8 +53,8 @@ public class LoginServlet extends HttpServlet {
                 if (ac != null) {
                     if (ac.getPassword().equals(pass)) {
                         session.setAttribute("account", ac);
-                        getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
                         session.setAttribute("message", "Login");
+                        getServletContext().getRequestDispatcher("/HomePage.jsp").forward(request, response);
                         return;
                     }
                 }

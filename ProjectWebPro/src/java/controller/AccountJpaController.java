@@ -24,7 +24,7 @@ import model.Account;
 
 /**
  *
- * @author kao-tu
+ * @author Mild-TN
  */
 public class AccountJpaController implements Serializable {
 
@@ -251,13 +251,12 @@ public class AccountJpaController implements Serializable {
             em.close();
         }
     }
-    
      public Account findByEmail(String email) {
-         EntityManager em = getEntityManager();
+        EntityManager em = getEntityManager();
         Query query = em.createNamedQuery("Account.findByEmail");
         query.setParameter("email", email);
         try {
-            return (Account)query.getSingleResult();
+            return (Account) query.getSingleResult();
         } finally {
             em.close();
         }

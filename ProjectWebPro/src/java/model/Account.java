@@ -79,6 +79,12 @@ public class Account implements Serializable {
         this.password = password;
     }
 
+    public Account(String email, String password, Register registerId) {
+        this.email = email;
+        this.password = password;
+        this.registerId = registerId;
+    }    
+
     public Integer getAccountId() {
         return accountId;
     }
@@ -152,5 +158,5 @@ public class Account implements Serializable {
     public String toString() {
         return "model.Account[ accountId=" + accountId + " ]";
     }
-    
+
 }

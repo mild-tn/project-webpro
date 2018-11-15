@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <head>
+    <head>
         <title>หน้าหลัก</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,6 +50,25 @@
         </header>
         <section style="height: 1000px;">
             <p>Test  test</p>
+            <p>${message}</p>
         </section>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <a href="HomePage.jsp" >Home</a><br>
+                        <a href="ShowProductServlet">Product</a><br>
+                    </div>
+                    <div class="col-4">
+                        ติดต่อเรา : 09345678 หรือ 02-345-678 <br>
+                        email : <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">
+                            timeto4@gmail.com</a>
+                    </div>
+                    <div class="col-4 text-center">
+                        รับสมัครตัวแทนจำหน่ายทั่วปะเทศ
+                    </div>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>

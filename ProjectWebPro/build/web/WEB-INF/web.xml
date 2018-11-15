@@ -28,6 +28,10 @@
         <servlet-name>ActivateKeyServlet</servlet-name>
         <servlet-class>servlet.ActivateKeyServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RemoveToCartServlet</servlet-name>
+        <servlet-class>servlet.RemoveToCartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShowProductServlet</servlet-name>
         <url-pattern>/ShowProductServlet</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>ActivateKeyServlet</servlet-name>
         <url-pattern>/ActivateKey</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveToCartServlet</servlet-name>
+        <url-pattern>/RemoveToCart</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

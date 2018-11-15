@@ -18,7 +18,7 @@
         }
     </style>
     <body>
-        <jsp:include page="include/NavBarBackColor.jsp"/>
+        <jsp:include page="include/NavBar.jsp"/>
         <form action="Login" method="post">
             <div id="overlay"></div>
             <div class="loginbox">
@@ -30,7 +30,7 @@
                 </form>
 
                 <a href="#">Forgot Password?</a><br>
-                <span id="text-account">Don't have an account?</span><a id="create-account" href="#"> Create here.</a>
+                <span id="text-account">Don't have an account?</span><a id="create-account" href="Register.jsp"> Create here.</a>
 
             </div>
     </body>

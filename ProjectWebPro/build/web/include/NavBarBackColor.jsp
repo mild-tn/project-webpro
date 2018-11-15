@@ -59,8 +59,17 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <c:choose>
-                            <c:when test="${message == 'Login'}">
-                                <a class="nav-link" href="LogoutServlet">Logout</a>
+                            <c:when test="${message == 'Login'}">   
+                                <div class="dropdown " style="margin-left: 10px;margin-right: 5px ;">
+                                    <button style="background-color: transparent;border: 0px;" class="btn btn-secondary "  data-toggle="dropdown" >
+                                        <img src="include/img/forPage/1024px-Circle-icons-profile.png" width="30px;">
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">Proflie</a>
+                                        <a class="dropdown-item" href="#">Payment</a>
+                                        <a class="dropdown-item" href="LogoutServlet">Logout</a>
+                                    </div>
+                                </div>
                             </c:when>
                             <c:when test="${message == null}">
                                 <a class="nav-link" href="Login.jsp">Login</a>
