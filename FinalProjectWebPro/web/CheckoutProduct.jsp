@@ -22,30 +22,41 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Product Code</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Add To Cart</th>
+                            <th scope="col">Remove</th>
+                            <th scope="col">Price</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${All.lineItems}" var="s" varStatus="vc">
-                        <tr>
-                            <th scope="row">${vc.count}</th>
-                            <td>${s.product.productcode}</td>
-                            <td>${s.product.productname}</td>
-                            <td></td>
-                        </tr>
-                         </c:forEach>
+                            <tr>
+                                <th scope="row">${vc.count}</th>
+                                <td>${s.product.productcode}</td>
+                                <td>${s.product.productname}</td>
+                                <td>${All.totalQuantity}</td>
+                                <th>
+                                    <form action="AddToCart">
+                                        <input type="hidden" value="${s.product.productcode}" name="addProductCode"/>
+                                        <button type="submit" class="btn btn-success">Add</button>
+                                    </form>
+                                </th>
+                                <th>
+                                    <form action="RemoveToCart">
+                                        <input type="hidden" value="${s.product.productcode}" name="removeProductCode"/>
+                                        <button type="submit" class="btn btn-danger" >Remove</button>
+                                    </form>
+                                </th>
+                                <th>
+                                    ${s.product.buyprice}/ 1 Piece
+                                </th>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
-                ${All.totalquantity}
+                ${All.totalPrice}
             </div>
         </div>
-
-
-        ${shoppingCart.lineItems}
-        <c:forEach items="${All.lineItems}" var="s">
-            ${s.product.productcode}<br>
-            ${s.product.productname}<br>
-        </c:forEach>
     </body>
 </html>
