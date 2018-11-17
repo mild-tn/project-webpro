@@ -5,6 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Product Detail</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"/>
     </head>
     <body style="background-color: #fffffe">
         <jsp:include page="include/NavBarBackColor.jsp"/>
