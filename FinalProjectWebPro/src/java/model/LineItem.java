@@ -39,14 +39,6 @@ public class LineItem implements Serializable {
         this.product = product;
     }
 
-    public double getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(double salePrice) {
-        this.salePrice = salePrice;
-    }
-
     public int getQuantity() {
         return quantity;
     }
@@ -56,6 +48,7 @@ public class LineItem implements Serializable {
     }
     
     public double getTotalPrice() {
-        return quantity * salePrice ;
+        double quantity = (double)this.quantity * product.getBuyprice().doubleValue();
+        return quantity ;
     }
 }

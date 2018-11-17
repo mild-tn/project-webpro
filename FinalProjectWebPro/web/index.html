@@ -12,8 +12,25 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
         <link rel="stylesheet" href="include/css/style-page.css"/> 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"/>
+        <link rel="icon" type="image/png" sizes="64x64" href="images/oie_transparent.png">
+      
     </head>
+    <style>
+        footer{
+            height: 100px;
+            background-color: #333;
+            padding: 20px;
+            font-size: 14px;
+            color: white;
+        }
+
+        a:hover{
+            text-decoration: none;
+        }
+    </style>
     <body>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <script>
             var prevScrollpos = window.pageYOffset;
             window.onscroll = function () {
@@ -33,7 +50,7 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <nav class="navbar navbar-expand-lg sticky-top" id="navbar">
-             <a class="navbar-brand" href="HomePage.jsp"><img src="include/img/forPage/TIME4U.png" width="100px"/></a>
+            <a class="navbar-brand" href="HomePage.jsp"><img src="include/img/forPage/TIME4U.png" width="100px"/></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,11 +64,11 @@ and open the template in the editor.
                         <a class="nav-link" href="ShowProductServlet">Product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="Contact.jsp">Contact</a>
                     </li>
                 </ul>
                 <form action="ProductList" method="post"  class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="productCode" required>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="productName" required>
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
                 </form>
                 <ul class="navbar-nav">
@@ -62,7 +79,9 @@ and open the template in the editor.
             </div>
         </nav>
         <header>
-            <a href="ShowProductServlet"><button type="button" class="btn btn-outline-light btn1">เลือกซื้อเลย >></button></a>
+            <a href="ShowProductServlet">
+                <button type="button" class="btn btn-outline-light btn1">เลือกซื้อเลย >></button>
+            </a>
             <p class="p1">เท่แบบมีสไตล์ ไม่เหมือนใคร</p>
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -91,8 +110,8 @@ and open the template in the editor.
                 </a>
             </div>
         </header>
-        <section style="height: 1000px;">
-            <p></p>
+        <section style="height: 100vh;">
+          
         </section>
         <footer>
             <div class="container">

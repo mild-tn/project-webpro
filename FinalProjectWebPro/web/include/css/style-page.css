@@ -36,20 +36,4 @@ header{
     border: 1px #000;
 }
 
-box{
-    width: 100px;
-    height: 100px;
-}
-
-footer{
-    height: 100px;
-    background-color: #333;
-    padding: 20px;
-    font-size: 14px;
-    color: white;
-}
-
-a:hover{
-    text-decoration: none;
-}
-
+/*carousel*/

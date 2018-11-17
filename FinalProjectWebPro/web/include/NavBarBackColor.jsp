@@ -46,11 +46,11 @@
                         <a class="nav-link" href="ShowProductServlet">Product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="Contact.jsp">Contact</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <form class="form-inline my-2 my-lg-0" action="ProductList">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="productName" >
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
                 </form>
                 <ul class="navbar-nav">
@@ -69,8 +69,7 @@
                                         <img src="include/img/forPage/1024px-Circle-icons-profile.png" width="30px;">
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">Proflie</a>
-                                        <a class="dropdown-item" href="#">Payment</a>
+                                        <a class="dropdown-item" href="Profile">Profile</a>
                                         <a class="dropdown-item" href="LogoutServlet">Logout</a>
                                     </div>
                                 </div>
