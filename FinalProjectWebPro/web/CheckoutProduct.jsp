@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Order List</title>
     </head>
     <body>
         <jsp:include page="include/NavBarBackColor.jsp"/>
@@ -19,14 +19,14 @@
             <div class="row">
                 <table class="table">
                     <thead class="thead-dark">
-                        <tr>
+                        <tr class="text-center">
                             <th scope="col">#</th>
                             <th scope="col">Product Code</th>
                             <th scope="col">Product Name</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Quantity * Price</th>
                             <th scope="col">Add To Cart</th>
                             <th scope="col">Remove</th>
-                            <th scope="col">Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,27 +35,30 @@
                                 <th scope="row">${vc.count}</th>
                                 <td>${s.product.productcode}</td>
                                 <td>${s.product.productname}</td>
-                                <td>${All.totalQuantity}</td>
-                                <th>
+                                <td class="text-center">${s.quantity}</td>
+                                <th class="text-center">
+                                    ${s.totalPrice}
+                                </th>
+                                <th class="text-center">
                                     <form action="AddToCart">
                                         <input type="hidden" value="${s.product.productcode}" name="addProductCode"/>
                                         <button type="submit" class="btn btn-success">Add</button>
                                     </form>
                                 </th>
-                                <th>
+                                <th class="text-center">
                                     <form action="RemoveToCart">
                                         <input type="hidden" value="${s.product.productcode}" name="removeProductCode"/>
                                         <button type="submit" class="btn btn-danger" >Remove</button>
                                     </form>
                                 </th>
-                                <th>
-                                    ${s.product.buyprice}/ 1 Piece
-                                </th>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-                ${All.totalPrice}
+                <a href="Payment.jsp">
+                    <button type="submit" class="btn btn-primary">Check out</button>
+                </a>
+                ${shoppingCart.totalPrice}
             </div>
         </div>
     </body>
