@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import model.Cart;
+import model.LineItem;
 import model.Orderdetail;
 import model.Product;
 
@@ -42,11 +43,17 @@ public class AddToCartServlet extends HttpServlet {
         Cart cart = (Cart) session.getAttribute("shoppingCart");
         ProductJpaController productJpaCtrl = new ProductJpaController(utx, emf);
         Product product = productJpaCtrl.findProduct(item);
-        session.setAttribute("productDetail", product);
-        Orderdetail orderDetail = new Orderdetail(1, item);
-        orderDetail.setProduct(product);
-        orderDetail.setQuantityordered(1);
+        LineItem line = new LineItem(product,1);
+        line.setProduct(product);
+        line.setQuantity(line.getQuantity());
+        System.out.println("line"+ line.getProduct() + line.getQuantity() * line.getTotalPrice());
+//        Orderdetail orderDetail = new Orderdetail(1, item);
+//        orderDetail.setProduct(product);
+//        orderDetail.setQuantityordered(1);
         cart.add(product);
+        session.setAttribute("shoppingCart",cart);
+        session.setAttribute("productDetail", product);
+        session.setAttribute("line", line);
         getServletContext().getRequestDispatcher("/ProductDetail.jsp").forward(request, response);
     }
 

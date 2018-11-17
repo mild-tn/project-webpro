@@ -35,7 +35,7 @@ public class RemoveToCartServlet extends HttpServlet {
             if (product != null) {
                 cart.remove(deleteItems);
                 session.setAttribute("shoppingCart", cart);
-                response.sendRedirect("ProductDetail.jsp");
+                response.sendRedirect("CheckoutProduct.jsp");
                 return;
             }
 

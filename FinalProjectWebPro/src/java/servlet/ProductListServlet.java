@@ -3,6 +3,7 @@ package servlet;
 import controller.ProductJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -28,18 +29,18 @@ public class ProductListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String productCode = request.getParameter("productCode");
+        String productName = request.getParameter("productName");
         ProductJpaController productJpaCtrl = new ProductJpaController(utx, emf);
-        Product products = productJpaCtrl.findProduct(productCode);
-        if (products != null) {
-            if (products.getProductcode().equals(productCode)) {
-                session.setAttribute("products", products);
-                response.sendRedirect("ShowSearchProduct.jsp");
-                return;
-            }
+        List<Product> products = null;
+        if (productName != null) {
+            products = productJpaCtrl.findByProductName(productName);
+            if (products.isEmpty()) {
+                request.setAttribute("message", "Product name '" + productName + "' does not exist !!!");
+            } else {
+                request.setAttribute("products", products);
 
+            }
         }
-        session.setAttribute("message", "Product name '" + productCode + "' does not exist !!!");
         getServletContext().getRequestDispatcher("/ProductList.jsp").forward(request, response);
     }
 

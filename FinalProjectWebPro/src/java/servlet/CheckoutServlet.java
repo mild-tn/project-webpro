@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 import model.Cart;
+import model.LineItem;
 
 /**
  *
@@ -28,6 +29,10 @@ public class CheckoutServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("shoppingCart");
+        LineItem line = (LineItem) session.getAttribute("line");
+//        System.out.println("Line line.getTotalPrice() : " + cart.getTotalQuantity());
+//        session.setAttribute("line", );
+
         session.setAttribute("All", cart);
         getServletContext().getRequestDispatcher("/CheckoutProduct.jsp").forward(request, response);
     }
