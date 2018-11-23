@@ -6,6 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Product Detail</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"/>
+        <link rel="icon" type="image/png" sizes="64x64" href="images/oie_transparent.png">
     </head>
     <body style="background-color: #fffffe">
         <jsp:include page="include/NavBarBackColor.jsp"/>
